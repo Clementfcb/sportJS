@@ -8,6 +8,7 @@ import { SynthesisComponent } from './visualization/synthesis/synthesis.componen
 import {GraphComponent} from "./visualization/graph/graph.component";
 import {SharedModule} from "../shared/shared.module";
 import {RecordStoreService} from "./record-store.service";
+import { FilterByCategoryPipe } from './filter-by-category.pipe';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {RecordStoreService} from "./record-store.service";
     SelectorComponent,
     StatComponent,
     VisualizationComponent,
-    SynthesisComponent
+    SynthesisComponent,
+    FilterByCategoryPipe
   ],
   providers: [RecordStoreService]
 })

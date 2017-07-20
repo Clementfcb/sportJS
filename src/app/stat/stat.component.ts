@@ -13,6 +13,7 @@ import {ResizeGraphService} from "./visualization/resize-graph.service";
 })
 export class StatComponent implements OnInit {
 
+  // permet de récupérer les éléments se trouvant dans le html
   @ViewChild('leftBlock') leftBlock: ElementRef;
   @ViewChild('separator') separator: ElementRef;
   @ViewChild('rightBlock') rightBlock: ElementRef;
@@ -21,8 +22,21 @@ export class StatComponent implements OnInit {
               private resizeGraphService: ResizeGraphService) { }
 
   ngOnInit() {
-
     // TODO exo-obs
+    const mouseDown$ = Observable.fromEvent(this.separator.nativeElement, 'mousedown');
+    const mouseMove$ = Observable.fromEvent(document, 'mousemove');
+    const mouseUp$ = Observable.fromEvent(document, 'mouseup');
+
+    // A chaque element de mouseDown, on écoute mouseMove
+    mouseDown$
+      .mergeMap(e => mouseMove$.takeUntil(mouseUp$))
+      .subscribe((e: MouseEvent) => {
+        // Blocs gauche et droit à redimensionner
+        const widths = this.getBlocksWidth(e.x);
+        this.leftBlock.nativeElement.setAttribute('style', `witdh:${widths.leftWidth}px`);
+        this.rightBlock.nativeElement.setAttribute('style', `witdh:${widths.rightWidth}px`);
+        this.resizeGraphService.setWidth(widths.rightWidth);
+      });
 
     const separatorRec = this.separator.nativeElement.getBoundingClientRect();
     const blocksWidth = this.getBlocksWidth(separatorRec.left + separatorRec.width / 2);

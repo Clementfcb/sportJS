@@ -1,11 +1,15 @@
 
 <div>
   <div class="nav sp-switch">
-    <div class="option">
+    <div  [routerLink]="['/stat', 'synthesis']" routerLinkActive="active"
+          class="option">
       Synthèse
     </div>
-    <div class="option">
+    <div [routerLink]="['/stat', 'graph']" routerLinkActive="active"
+         class="option">
       Graphiques
     </div>
-  </div>
+   </div>
+  <router-outlet></router-outlet>
 </div>
+

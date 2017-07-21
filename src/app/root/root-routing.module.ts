@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UnknownComponent } from './unknown/unknown.component';
 import { LoginComponent } from '../security/login/login.component';
+import {AutorisationGuard} from "../security/guard/autorisation.guard";
 
 const routes: Routes = [{
   path: '',
@@ -16,13 +17,16 @@ const routes: Routes = [{
   component: LoginComponent
 }, {
   path: 'plan',
-  loadChildren: 'app/plan/plan.module#PlanModule'
+  loadChildren: 'app/plan/plan.module#PlanModule',
+  canActivate: [AutorisationGuard]
 }, {
   path: 'run',
-  loadChildren: 'app/run/run.module#RunModule'
+  loadChildren: 'app/run/run.module#RunModule',
+  canActivate: [AutorisationGuard]
 }, {
   path: 'stat',
-  loadChildren: 'app/stat/stat.module#StatModule'
+  loadChildren: 'app/stat/stat.module#StatModule',
+  canActivate: [AutorisationGuard],
 }, {
   path: '**',
   component: UnknownComponent
